@@ -4,6 +4,7 @@ from tkinter import ttk
 import os
 
 
+
 root = Tk()
 root.title("Manager Calendar")
 screen_width = root.winfo_screenwidth()

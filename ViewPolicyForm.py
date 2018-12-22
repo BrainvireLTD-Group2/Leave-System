@@ -1,6 +1,6 @@
 from tkinter import*
-import tkinter.messagebox as message_box
 from tkinter import ttk
+
 
 
 root = Tk()

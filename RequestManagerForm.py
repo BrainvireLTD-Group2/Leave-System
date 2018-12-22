@@ -1,7 +1,8 @@
 from tkinter import*
 import tkinter.messagebox as message_box
 from tkinter import ttk
-import os
+import sqlite3
+from sqlite3 import Error
 
 root = Tk()
 root.title("Leave Request Manager Form")
@@ -34,6 +35,16 @@ mgr_name = "Steven Tasks"
 
 # ---- Methods ----
 
+try:
+    conn = sqlite3.connect('draft.s3db')
+    c = conn.cursor()
+except Error as e:
+    print(e)
+
+f=open("EmpNo.txt", "r")
+if f.mode == 'r':
+    EmpID =f.read()
+
 
 def accept_request():
 
@@ -58,6 +69,19 @@ def deny_request():
         print("Request Denial Canceled")
 
 
+def populate_listbox():
+    cursor = conn.execute("SELECT RequestID, LeaveDate, EmployeeID, SignedOff from Request Where ManagerID = ?", (EmpID,))
+    for row in cursor:
+        print(row[0])
+        lst_leave_req.insert('', 'end', values=(("1"), (row[1]), (row[2])))
+
+
+def update_label():
+    lbl_title.configure(text="Details for request # " + str(
+                          request_id) + " submitted on " + submission_date + "\n\n" + "EmployeeID: " + str(
+                          emp_id) + "\nEmployee Name: " + emp_name + "\nLeave Date: " + leave_date + "\nLeave Type: " + leave_type + "\nEmployee Comment: \n" + emp_comment)
+
+
 # ---- Frame ----
 
 
@@ -78,7 +102,7 @@ fraInfo.grid_columnconfigure(0, weight=1)
 
 # ---- Labels ---- #
 
-lbl_title = Label(fraInfo, justify=LEFT, anchor=W, width=120, font=('Arial', 16), text="Details for request # " + str(request_id) + " submitted on " + submission_date + "\n\n" + "EmployeeID: " + str(emp_id) + "\nEmployee Name: " + emp_name + "\nLeave Date: " + leave_date + "\nLeave Type: " + leave_type + "\nEmployee Comment: \n" + emp_comment)
+lbl_title = Label(fraInfo, justify=LEFT, anchor=W, width=120, font=('Arial', 16), text="")
 lbl_title.grid(row=1, column=0, columnspan=4)
 
 lbl_mgr_detail = Label(fraInfo, justify=LEFT, anchor=W, width=120, font=('Arial', 16), text="\nYour Response: ")
@@ -104,8 +128,7 @@ lst_leave_req.column('#2', stretch=YES, minwidth=50, width=100)
 lst_leave_req.column('#3', stretch=YES, minwidth=50, width=100)
 lst_leave_req.column('#4', stretch=YES, minwidth=50, width=100)
 
-lst_leave_req.insert('', 'end', values=("#1134", "08/03/19", "1005", "Donette Foller"))
-lst_leave_req.insert('', 'end', values=("#1255", "04/06/19", "1012", "Abel Maclead"))
+populate_listbox()
 
 # ---- Multi-Line Text Box ---- #
 

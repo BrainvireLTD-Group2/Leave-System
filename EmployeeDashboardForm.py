@@ -1,5 +1,4 @@
 from tkinter import*
-import tkinter.messagebox as message_box
 import datetime
 import calendar
 import os
@@ -12,7 +11,7 @@ try:
     c = conn.cursor()
 except Error as e:
     print(e)
-    
+
 f=open("EmpNo.txt", "r")
 if f.mode == 'r':
     EmpID =f.read()

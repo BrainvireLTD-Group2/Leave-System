@@ -1,7 +1,8 @@
 from tkinter import*
 import tkinter.messagebox as message_box
 from tkinter import ttk
-import os
+import sqlite3
+
 
 root = Tk()
 root.title("Calendar Options Form")

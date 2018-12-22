@@ -21,7 +21,6 @@ def get_calendar(locale, fwday):
         return calendar.LocaleTextCalendar(fwday, locale)
 
 class Calendar(ttk.Frame):
-    # XXX ToDo: cget and configure
 
     datetime = calendar.datetime.datetime
     timedelta = calendar.datetime.timedelta
