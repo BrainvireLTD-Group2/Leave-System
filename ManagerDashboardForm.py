@@ -3,9 +3,26 @@ import tkinter.messagebox as message_box
 import datetime
 import calendar
 import os
+import sqlite3
 
+from sqlite3 import Error
+
+try:
+    conn = sqlite3.connect('draft.s3db')
+    c = conn.cursor()
+except Error as e:
+    print(e)
+    
+f=open("EmpNo.txt", "r")
+if f.mode == 'r':
+    EmpID =f.read()
+    
 now = datetime.datetime.now()
-
+cursor = conn.execute("SELECT Name, Days_Of_Leave, RolloverDays from Employee Where EmployeeID = ?", (EmpID,))
+for row in cursor:
+   user_name = row[0]
+   num_days = row[1]
+   Rollover = row[2]
 
 root = Tk()
 root.title("Manager Leave Dashboard")
@@ -26,9 +43,8 @@ month = calendar.month_name[now.month]
 year = now.year
 
 # test data
-num_days = 15
-days_expiring_soon = 3
-user_name = "Steven Tasks"
+
+days_expiring_soon = (num_days - Rollover)
 num_pending_requests = 1
 
 # ---- Methods ----

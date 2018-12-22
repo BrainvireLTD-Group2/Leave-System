@@ -27,7 +27,6 @@ day_of_week = calendar.day_abbr[now.weekday()]
 day = now.day
 month = calendar.month_name[now.month]
 year = now.year
-
 half_day=0 #0 for full day, 1 for half day
 
 # test data
@@ -44,7 +43,7 @@ def submit_request ():
 
 
 def cancel_request():
-    print("Leave Request Canceled")
+    print("Leave Request Cancelled")
     root.destroy()
 
 

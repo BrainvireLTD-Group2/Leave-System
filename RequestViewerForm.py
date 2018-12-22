@@ -2,7 +2,19 @@ from tkinter import*
 import tkinter.messagebox as message_box
 from tkinter import ttk
 import os
+import sqlite3
+from sqlite3 import Error
 
+try:
+    conn = sqlite3.connect('draft.s3db')
+    c = conn.cursor()
+except Error as e:
+    print(e)
+
+f=open("EmpNo.txt", "r")
+if f.mode == 'r':
+    EmpID =f.read()
+    
 root = Tk()
 root.title("Leave Request Viewer Form")
 screen_width = root.winfo_screenwidth()
@@ -95,10 +107,11 @@ lst_leave_req.column('#1', stretch=YES, minwidth=50, width=100)
 lst_leave_req.column('#2', stretch=YES, minwidth=50, width=100)
 lst_leave_req.column('#3', stretch=YES, minwidth=50, width=100)
 
-lst_leave_req.insert('', 'end', values=("#1000", "01/02/18", "Yes"))
-lst_leave_req.insert('', 'end', values=("#1003", "03/03/18", "Yes"))
-lst_leave_req.insert('', 'end', values=("#1234", "03/05/19", "No"))
-lst_leave_req.insert('', 'end', values=("#1255", "04/06/19", "Pending"))
+cursor = conn.execute("SELECT RequestID, LeaveDate, SignedOff from Request Where EmployeeID = ?", (EmpID,))
+for row in cursor:
+    print (row[0])
+    lst_leave_req.insert('', 'end', values=(("1"), (row[1]), (row[2])))
+
 
 ttk.Scrollbar(orient="vertical",command=lst_leave_req.yview)
 
