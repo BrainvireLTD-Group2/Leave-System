@@ -1,4 +1,4 @@
-from tkinter import*
+from tkinter import *
 import tkinter.messagebox as message_box
 from tkinter import ttk
 import datetime
@@ -16,7 +16,6 @@ except Error as e:
 
 now = datetime.datetime.now()
 
-
 # ---- Variables ----
 
 day_of_week = calendar.day_abbr[now.weekday()]
@@ -24,13 +23,11 @@ day = now.day
 month = calendar.month_name[now.month]
 year = now.year
 policy_path = "leave_policy.txt"
-emp_no = 0
 num_pending_requests = 1
-half_day=0 #0 for full day, 1 for half day
+half_day = 0  # 0 for full day, 1 for half day
 # test data
 num_days = 15
 request_id = 1234
-emp_id = 1011
 leave_date = "13/06/19"
 submission_date = "03/05/19"
 leave_type = "Holiday"
@@ -45,7 +42,7 @@ manager_listbox_headers = ('RequestID', 'Date', 'EmpID', 'Name')
 
 # ---- Methods ----
 
-def open_leave_request ():
+def open_leave_request():
     print("Opening Leave Request Form")
     ShowLeaveRequestForm()
     leaverequestform.mainloop()
@@ -67,10 +64,11 @@ def open_policy_viewer():
     ShowPolicyViewerForm()
     policyviewerform.mainloop()
 
+
 def open_manager_calendar():
     print("Opening Manager Calendar")
-    #print("*Actually opens calendar options form* LIKE A BOSS")
-    #os.startfile(r'CalendarOptionsForm.py')
+    # print("*Actually opens calendar options form* LIKE A BOSS")
+    # os.startfile(r'CalendarOptionsForm.py')
     os.startfile(r'ManagerCalendarForm.py')
 
 
@@ -78,24 +76,28 @@ def open_request_manager():
     print("Opening Leave Request Manager")
     os.startfile(r'RequestManagerForm.py')
 
-def close_policy_form ():
+
+def close_policy_form():
     policyviewerform.destroy()
 
-def submit_request ():
+
+def submit_request():
     message_box.showinfo("", "Leave Request Submitted")
     leaverequestform.destroy()
+
 
 def cancel_request():
     print("Leave Request Cancelled")
     leaverequestform.destroy()
 
-def amend_request ():
+
+def amend_request():
     print("Amending Request")
     ShowLeaveRequestForm()
     leaverequestform.mainloop()
 
-def revoke_request():
 
+def revoke_request():
     result = message_box.askquestion("Revoke Request", "Are you sure you want to revoke this request?", icon='warning')
 
     if result == 'yes':
@@ -103,7 +105,6 @@ def revoke_request():
         print("Request Revoked")
     else:
         print("Request Revoke Canceled")
-
 
 
 def ShowEmployeeDashboardForm():
@@ -121,6 +122,7 @@ def ShowEmployeeDashboardForm():
     employeedashboardform.geometry("%dx%d+%d+%d" % (empFrmwidth, empFrmheight, x, y))
     EmployeeDashboardForm()
 
+
 def ShowManagerDashboardForm():
     global managerdashboardform
     managerdashboardform = Toplevel()
@@ -135,6 +137,7 @@ def ShowManagerDashboardForm():
     managerdashboardform.resizable(0, 0)
     managerdashboardform.geometry("%dx%d+%d+%d" % (manFrmWidth, manFrmHeight, x, y))
     ManagerDashboardForm()
+
 
 def ShowPolicyViewerForm():
     global policyviewerform
@@ -151,6 +154,7 @@ def ShowPolicyViewerForm():
     policyviewerform.geometry("%dx%d+%d+%d" % (viewFrmWidth, viewFrmHeight, x, y))
     PolicyViewerForm()
 
+
 def ShowLeaveRequestForm():
     global leaverequestform
     leaverequestform = Toplevel()
@@ -165,6 +169,7 @@ def ShowLeaveRequestForm():
     leaverequestform.resizable(0, 0)
     leaverequestform.geometry("%dx%d+%d+%d" % (requestFrmWidth, requestFrmHeight, x, y))
     LeaveRequestForm()
+
 
 def ShowRequestViewerForm():
     global requestviewerform
@@ -181,8 +186,8 @@ def ShowRequestViewerForm():
     requestviewerform.geometry("%dx%d+%d+%d" % (viewerFrmWidth, viewerFrmHeight, x, y))
     RequestViewerForm()
 
-def EmployeeDashboardForm():
 
+def EmployeeDashboardForm():
     ufix_logo = PhotoImage(file="UfixLogo.png")
     mini_calendar = PhotoImage(file="calendar.png")
 
@@ -244,7 +249,8 @@ def EmployeeDashboardForm():
             lbl_notify_expire.configure(
                 text="! You have " + str(days_expiring_soon) + " day which need to be booked soon")
         else:
-            lbl_notify_expire.configure(text="! You have " + str(days_expiring_soon) + " days which need to be booked soon")
+            lbl_notify_expire.configure(
+                text="! You have " + str(days_expiring_soon) + " days which need to be booked soon")
 
 
 def ManagerDashboardForm():
@@ -315,7 +321,8 @@ def ManagerDashboardForm():
             lbl_notify_expire.configure(
                 text="! You have " + str(days_expiring_soon) + " day which need to be booked soon")
         else:
-            lbl_notify_expire.configure(text="! You have " + str(days_expiring_soon) + " days which need to be booked soon")
+            lbl_notify_expire.configure(
+                text="! You have " + str(days_expiring_soon) + " days which need to be booked soon")
 
     if num_pending_requests > 0:
         lbl_notify_requests.configure(bg='#7bbc6e')
@@ -346,6 +353,7 @@ def PolicyViewerForm():
 
     txt_scroll.pack(side=RIGHT, anchor=E, fill="y", )
 
+
 def LeaveRequestForm():
     TopLabels = Frame(leaverequestform, width=900, height=400, relief="raise")
     TopLabels.pack(side=TOP, padx=20)
@@ -372,9 +380,7 @@ def LeaveRequestForm():
     Logo.grid_columnconfigure(0, weight=1)
 
     lbl_title = Label(TopLabels, justify=LEFT, anchor=W, width=100, font=('Arial', 20),
-                      text="You currently have " + str(
-                          num_days) + " days of leave remaining.\n\n" + "Request ID: #" + str(
-                          request_id) + "\nEmployee ID: " + str(emp_id))
+                      text="You currently have " + str(num_days) + " days of leave remaining.\n\n" + "Request ID: #" + str(request_id) + "\nEmployee ID: " + str(emp_no))
     lbl_title.grid(row=0, column=0)
 
     mini_calendar = PhotoImage(file="calendar.png")
@@ -400,9 +406,6 @@ def LeaveRequestForm():
     lbl_leave_type = Label(Options, width=11, font=('Arial', 20), text="Leave Type: ", justify=LEFT)
     lbl_leave_type.grid(row=2, column=0)
 
-    btn_submit = Button(Buttons, width=15, font=('Arial', 20), text="Submit", command=submit_request)
-    btn_submit.grid(row=0, column=0, padx=2)
-
     btn_cancel = Button(Buttons, width=15, font=('Arial', 20), text="Cancel", command=cancel_request)
     btn_cancel.grid(row=0, column=1, padx=2)
 
@@ -422,6 +425,24 @@ def LeaveRequestForm():
 
     opt_half_day = ttk.Radiobutton(Options, width=20, variable=half_day, value=1, text="Half Day")
     opt_half_day.grid(row=1, column=1, padx=2)
+
+    btn_submit = Button(Buttons, width=15, font=('Arial', 20), text="Submit",command=lambda: RequestLeave(half_day, cmb_date_picker.currenttext(), txt_comments.get("1.0", END)))
+    btn_submit.grid(row=0, column=0, padx=2)
+
+
+def RequestLeave(half_day, date, com):
+    cursor = conn.execute("SELECT ManagerID from Employee Where EmployeeID = ?", (emp_no,))
+    for row in cursor:
+        ManID = row[0]
+    cursor = conn.execute("SELECT RequestID FROM Request ORDER BY RequestID DESC LIMIT 1")
+    for row in cursor:
+        RequestID = row[0]
+    RequestID = RequestID + 1
+    # sql = """ INSERT INTO Request (?, ?, ?, ?, ?, ?, ?, ?) VALUES (%s, %s, %s, %s, %s, %s, %s) """
+    # val = (RequestID, emp_no, ManID, half_day, date, 'N', com)
+    cursor.execute("INSERT INTO Request VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (RequestID, emp_no, ManID, half_day, date, 'N', com, ""))
+    conn.commit()
+
 
 def RequestViewerForm():
     fraListBox = Frame(requestviewerform, width=300, height=500, relief="raise")
@@ -449,7 +470,6 @@ def RequestViewerForm():
     pic_ufix_logo = Label(fraInfo, anchor=SE, justify=RIGHT, image=ufix_logo)
 
     pic_ufix_logo.grid(row=5, column=3)
-
 
     lst_leave_req = ttk.Treeview(fraListBox, columns=viewer_listbox_headers, show="headings", height=26)
     lst_leave_req.pack(side=TOP)
@@ -479,6 +499,7 @@ def RequestViewerForm():
 # ---- Initialization ----
 
 
+global emp_no
 emp_no = input("Please enter EmpID")
 Manager = "Not found"
 cursor = conn.execute("SELECT Manager from Employee Where EmployeeID = ?", (emp_no,))
@@ -508,8 +529,6 @@ elif Manager == "N":
         user_name = row[0]
         num_days = row[1]
         Rollover = row[2]
-
-
 
     days_expiring_soon = (num_days - Rollover)  # NOT SURE HOW
 
